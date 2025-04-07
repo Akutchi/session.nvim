@@ -15,8 +15,9 @@ function M.SessionSave()
   for tab = 1, vim.fn.bufnr('$') do
     local bufname = vim.fn.bufname(tab)
     local abs_path = ""
+    local is_absolute_path = string.sub(bufname, 1, 1) ~= '/'
 
-    if string.sub(bufname, 1, 1) ~= '/' then
+    if not is_absolute_path then
       abs_path = vim.fn.getcwd() .. "/"
     end
 
@@ -31,11 +32,15 @@ function M.SessionRestore()
 
   local handle = io.popen("cat .session")
 
-  if handle == nil or handle:read("*line") == "" then
-    return
+  if handle == nil then
+    return "could not use popen"
   end
 
   local line = handle:read("*line")
+  if line == "" or line == nil then
+    return "nothing to restore"
+  end
+
   while line do
     vim.cmd("e " .. line)
     line = handle:read("*line")
