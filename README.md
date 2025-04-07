@@ -7,9 +7,20 @@ This plugin does two things,
 - Using the Ctrl+s command, it saves the opened files in a .session file
 - Using the Ctrl+r command, it restore the last session (opened files, nvimtree and terminal buffer)
 
+![gif](./doc/visual.gif)
+*Ctrl+r command*
+
 # Installation
 
-#### [Lazy.nvim](https://github.com/folke/lazy.nvim)
+## Requirements
+
+- Neovim >= 0.7
+- [nvim-tree.lua](https://github.com/nvim-tree/nvim-tree.lua)
+- [toogleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
+
+## Configuration
+
+### [Lazy.nvim](https://github.com/folke/lazy.nvim)
 
 ```lua
 { "Akutchi/session.nvim" }

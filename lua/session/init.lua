@@ -5,9 +5,8 @@ local function Is_Open_File(bufname)
   local is_scratch = bufname == ""
   local is_term_file = string.sub(bufname, 1, 4) == "term"
 
-  return not (is_nvimtree and is_scratch and is_term_file)
+  return not (is_nvimtree or is_scratch or is_term_file)
 end
-
 
 function M.SessionSave()
   vim.cmd("silent !rm -f .session")
@@ -38,16 +37,17 @@ function M.SessionRestore()
 
   local line = handle:read("*line")
   while line do
-    vim.cmd("tabe " .. line)
+    vim.cmd("e " .. line)
     line = handle:read("*line")
   end
 
-  --[[ vim.cmd.normal("<leader>e")
+  vim.cmd("ToggleTerm size=15 dir=" .. vim.fn.getcwd() .. " direction=horizontal name=term")
   vim.api.nvim_set_current_win(tabs)
 
-  vim.cmd.split()
-  vim.cmd.terminal()
- ]]
+  local nt_api = require('nvim-tree.api')
+  require('nvim-tree').setup({})
+  nt_api.tree.open()
+
   vim.api.nvim_set_current_win(tabs)
 end
 
