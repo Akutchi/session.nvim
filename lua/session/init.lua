@@ -50,7 +50,15 @@ function M.SessionRestore()
   vim.api.nvim_set_current_win(tabs)
 
   local nt_api = require('nvim-tree.api')
-  require('nvim-tree').setup({})
+  require('nvim-tree').setup({
+    git = {
+      enable = true,
+      ignore = false
+    },
+    renderer = {
+      highlight_git = "all"
+    }
+  })
   nt_api.tree.open()
 
   vim.api.nvim_set_current_win(tabs)
